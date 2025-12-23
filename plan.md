@@ -69,5 +69,4 @@
 - Contenu riche et informatif
 - Navigation intuitive
 - Temps de chargement < 3s
-- Compatible tous navigateurs et devices</content>
-<parameter name="filePath">c:\Users\HULULWABURHAN\yoko\plan.md
+- Compatible tous navigateurs et devices

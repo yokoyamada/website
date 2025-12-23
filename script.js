@@ -199,5 +199,4 @@ style.textContent = `
         100% { transform: scaleY(1); }
     }
 `;
-document.head.appendChild(style);</content>
-<parameter name="filePath">c:\Users\HULULWABURHAN\yoko\script.js
+document.head.appendChild(style);
