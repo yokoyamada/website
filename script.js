@@ -33,38 +33,21 @@ document.querySelectorAll('section > .container').forEach(section => {
     observer.observe(section);
 });
 
-// Piano key animation effect (subtle)
-function createPianoKeys() {
-    const keys = document.createElement('div');
-    keys.className = 'piano-keys';
-    keys.innerHTML = `
-        <div class="white-key"></div>
-        <div class="black-key"></div>
-        <div class="white-key"></div>
-        <div class="black-key"></div>
-        <div class="white-key"></div>
-        <div class="white-key"></div>
-        <div class="black-key"></div>
-        <div class="white-key"></div>
-        <div class="black-key"></div>
-        <div class="white-key"></div>
-        <div class="black-key"></div>
-        <div class="white-key"></div>
-    `;
-    document.body.appendChild(keys);
-    
-    // Animate keys occasionally
-    setInterval(() => {
-        const randomKey = keys.children[Math.floor(Math.random() * keys.children.length)];
-        randomKey.style.animation = 'keyPress 0.3s ease';
-        setTimeout(() => {
-            randomKey.style.animation = '';
-        }, 300);
-    }, 5000);
+// Gallery tabs
+function showGallery(category) {
+    // Hide all gallery contents
+    document.querySelectorAll('.gallery-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    // Remove active from all buttons
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    // Show selected category
+    document.getElementById(category).classList.add('active');
+    // Add active to clicked button
+    event.target.classList.add('active');
 }
-
-// Add piano keys to hero
-document.addEventListener('DOMContentLoaded', createPianoKeys);
 
 // Add CSS for piano keys
 const style = document.createElement('style');
