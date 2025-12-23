@@ -217,6 +217,16 @@
         <p>&copy; 2025 Yoko Yamada. Tous droits réservés.</p>
     </footer>
 
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+        <div class="zoom-controls">
+            <span class="zoom-level" id="zoom-level">100%</span>
+            <input type="range" min="50" max="300" value="100" class="zoom-slider" id="zoom-slider" oninput="updateZoom()">
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html></content>
