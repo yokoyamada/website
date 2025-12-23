@@ -33,129 +33,55 @@ document.querySelectorAll('section > .container').forEach(section => {
     observer.observe(section);
 });
 
-// Gallery carousel functionality
-let currentSlide = 0;
-let totalSlides = 0;
-let isTransitioning = false;
-
-function initGallery() {
-    const track = document.getElementById('gallery-track');
-    const images = track.querySelectorAll('img');
-    totalSlides = images.length;
-
-    // Create indicators
-    const indicatorsContainer = document.getElementById('gallery-indicators');
-    indicatorsContainer.innerHTML = '';
-
-    for (let i = 0; i < totalSlides; i++) {
-        const indicator = document.createElement('div');
-        indicator.className = 'indicator';
-        if (i === 0) indicator.classList.add('active');
-        indicator.addEventListener('click', () => goToSlide(i));
-        indicatorsContainer.appendChild(indicator);
-    }
-
-    // Add click event to images for lightbox
-    images.forEach((img, index) => {
-        img.addEventListener('click', function() {
-            openLightbox(this.src);
-        });
-    });
-
-    updateArrows();
-}
-
-function updateArrows() {
-    const prevArrow = document.getElementById('prev-arrow');
-    const nextArrow = document.getElementById('next-arrow');
-
-    prevArrow.style.opacity = currentSlide === 0 ? '0.5' : '1';
-    nextArrow.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
-}
-
-function goToSlide(slideIndex) {
-    if (isTransitioning || slideIndex < 0 || slideIndex >= totalSlides) return;
-
-    isTransitioning = true;
-    currentSlide = slideIndex;
-
-    const track = document.getElementById('gallery-track');
-    track.style.transform = `translateX(-${currentSlide * 100}%)`;
-
-    // Update indicators
-    document.querySelectorAll('.indicator').forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentSlide);
-    });
-
-    updateArrows();
-
-    setTimeout(() => {
-        isTransitioning = false;
-    }, 300);
-}
-
-function nextSlide() {
-    goToSlide(currentSlide + 1);
-}
-
-function prevSlide() {
-    goToSlide(currentSlide - 1);
-}
-
-// Touch/swipe functionality
-let startX = 0;
-let endX = 0;
-let isDragging = false;
-
-function initSwipe() {
-    const galleryWrapper = document.querySelector('.gallery-wrapper');
-
-    galleryWrapper.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-    });
-
-    galleryWrapper.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        endX = e.touches[0].clientX;
-    });
-
-    galleryWrapper.addEventListener('touchend', () => {
-        if (!isDragging) return;
-
-        const diffX = startX - endX;
-        const threshold = 50;
-
-        if (Math.abs(diffX) > threshold) {
-            if (diffX > 0) {
-                nextSlide();
-            } else {
-                prevSlide();
-            }
-        }
-
-        isDragging = false;
-    });
-}
-
 // Lightbox functionality
 let currentZoom = 1;
 let isDragging = false;
 let startX, startY, initialX, initialY;
+let currentImageIndex = 0;
+let galleryImages = [];
 
 function openLightbox(src) {
     const lightbox = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
+
+    // Find the index of the clicked image
+    galleryImages = Array.from(document.querySelectorAll('.gallery-grid img'));
+    currentImageIndex = galleryImages.findIndex(image => image.src.includes(src.split('/').pop()));
+
     img.src = src;
     img.style.transform = 'scale(1) translate(0, 0)';
     currentZoom = 1;
     document.getElementById('zoom-slider').value = 100;
     document.getElementById('zoom-level').textContent = '100%';
     lightbox.classList.add('active');
+
+    updateLightboxNavigation();
 }
 
 function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
+}
+
+function navigateLightbox(direction) {
+    const newIndex = currentImageIndex + direction;
+    if (newIndex >= 0 && newIndex < galleryImages.length) {
+        currentImageIndex = newIndex;
+        const img = document.getElementById('lightbox-img');
+        img.src = galleryImages[currentImageIndex].src;
+        img.style.transform = 'scale(1) translate(0, 0)';
+        currentZoom = 1;
+        document.getElementById('zoom-slider').value = 100;
+        document.getElementById('zoom-level').textContent = '100%';
+        updateLightboxNavigation();
+    }
+}
+
+function updateLightboxNavigation() {
+    const prevBtn = document.querySelector('.lightbox-nav.prev');
+    const nextBtn = document.querySelector('.lightbox-nav.next');
+
+    prevBtn.style.opacity = currentImageIndex === 0 ? '0.3' : '1';
+    nextBtn.style.opacity = currentImageIndex === galleryImages.length - 1 ? '0.3' : '1';
 }
 
 function updateZoom() {
@@ -168,13 +94,11 @@ function updateZoom() {
 
 // Add click event to gallery images
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize gallery carousel
-    initGallery();
-    initSwipe();
-
-    // Add navigation arrow events
-    document.getElementById('prev-arrow').addEventListener('click', prevSlide);
-    document.getElementById('next-arrow').addEventListener('click', nextSlide);
+    document.querySelectorAll('.gallery-grid img').forEach(img => {
+        img.addEventListener('click', function() {
+            openLightbox(this.src);
+        });
+    });
 
     // Lightbox image interactions
     const lightboxImg = document.getElementById('lightbox-img');
@@ -245,6 +169,28 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('lightbox').addEventListener('click', function(e) {
         if (e.target === this) {
             closeLightbox();
+        }
+    });
+
+    // Touch/swipe navigation in lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightboxImg.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+    });
+
+    lightboxImg.addEventListener('touchend', function(e) {
+        touchEndX = e.changedTouches[0].clientX;
+        const diffX = touchStartX - touchEndX;
+        const threshold = 50;
+
+        if (Math.abs(diffX) > threshold) {
+            if (diffX > 0) {
+                navigateLightbox(1); // Swipe left -> next image
+            } else {
+                navigateLightbox(-1); // Swipe right -> previous image
+            }
         }
     });
 });
