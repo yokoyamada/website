@@ -18,12 +18,31 @@ header {
     width: 100%;
     top: 0;
     z-index: 100;
+    border-bottom: 3px solid #8b4513;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .logo {
     font-size: 1.5rem;
     font-weight: bold;
     color: #1a1a1a;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 2rem;
 }
 
 nav ul li a {
@@ -33,6 +52,21 @@ nav ul li a {
 }
 
 nav ul li a:hover {
+    color: #8b4513;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
     color: #8b4513;
 }
 
@@ -405,6 +439,10 @@ footer {
     
     nav ul li {
         margin-left: 1rem;
+    }
+    
+    .social-icons {
+        margin-top: 1rem;
     }
     
     .hero-content h1 {
