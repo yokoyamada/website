@@ -59,10 +59,10 @@
 - **Multilingue** : Français/Anglais si nécessaire
 
 ## Itérations
-- **Itération 1** : Scraping et synthèse de contenu
-- **Itération 2** : Réécriture des textes et structure HTML
-- **Itération 3** : Réorganisation galerie et CSS amélioré
-- **Itération 4** : Tests, optimisations et finalisation
+- **Itération 1** ✅ : Scraping et synthèse de contenu (bio détaillée, programmes de concerts)
+- **Itération 2** ✅ : Réécriture des textes et structure HTML (section répertoire, navigation mise à jour)
+- **Itération 3** ✅ : Réorganisation galerie et CSS amélioré (onglets par catégorie, design sobre et élégant)
+- **Itération 4** : Tests, optimisations et finalisation (SEO, responsive, animations)
 
 ## Critères de succès
 - Site visuellement attrayant et professionnel
