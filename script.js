@@ -33,20 +33,109 @@ document.querySelectorAll('section > .container').forEach(section => {
     observer.observe(section);
 });
 
-// Gallery tabs
-function showGallery(category) {
-    // Hide all gallery contents
-    document.querySelectorAll('.gallery-content').forEach(content => {
-        content.classList.remove('active');
+// Gallery carousel functionality
+let currentSlide = 0;
+let totalSlides = 0;
+let isTransitioning = false;
+
+function initGallery() {
+    const track = document.getElementById('gallery-track');
+    const images = track.querySelectorAll('img');
+    totalSlides = images.length;
+
+    // Create indicators
+    const indicatorsContainer = document.getElementById('gallery-indicators');
+    indicatorsContainer.innerHTML = '';
+
+    for (let i = 0; i < totalSlides; i++) {
+        const indicator = document.createElement('div');
+        indicator.className = 'indicator';
+        if (i === 0) indicator.classList.add('active');
+        indicator.addEventListener('click', () => goToSlide(i));
+        indicatorsContainer.appendChild(indicator);
+    }
+
+    // Add click event to images for lightbox
+    images.forEach((img, index) => {
+        img.addEventListener('click', function() {
+            openLightbox(this.src);
+        });
     });
-    // Remove active from all buttons
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('active');
+
+    updateArrows();
+}
+
+function updateArrows() {
+    const prevArrow = document.getElementById('prev-arrow');
+    const nextArrow = document.getElementById('next-arrow');
+
+    prevArrow.style.opacity = currentSlide === 0 ? '0.5' : '1';
+    nextArrow.style.opacity = currentSlide === totalSlides - 1 ? '0.5' : '1';
+}
+
+function goToSlide(slideIndex) {
+    if (isTransitioning || slideIndex < 0 || slideIndex >= totalSlides) return;
+
+    isTransitioning = true;
+    currentSlide = slideIndex;
+
+    const track = document.getElementById('gallery-track');
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+    // Update indicators
+    document.querySelectorAll('.indicator').forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
     });
-    // Show selected category
-    document.getElementById(category).classList.add('active');
-    // Add active to clicked button
-    event.target.classList.add('active');
+
+    updateArrows();
+
+    setTimeout(() => {
+        isTransitioning = false;
+    }, 300);
+}
+
+function nextSlide() {
+    goToSlide(currentSlide + 1);
+}
+
+function prevSlide() {
+    goToSlide(currentSlide - 1);
+}
+
+// Touch/swipe functionality
+let startX = 0;
+let endX = 0;
+let isDragging = false;
+
+function initSwipe() {
+    const galleryWrapper = document.querySelector('.gallery-wrapper');
+
+    galleryWrapper.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+    });
+
+    galleryWrapper.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        endX = e.touches[0].clientX;
+    });
+
+    galleryWrapper.addEventListener('touchend', () => {
+        if (!isDragging) return;
+
+        const diffX = startX - endX;
+        const threshold = 50;
+
+        if (Math.abs(diffX) > threshold) {
+            if (diffX > 0) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+        }
+
+        isDragging = false;
+    });
 }
 
 // Lightbox functionality
@@ -79,11 +168,13 @@ function updateZoom() {
 
 // Add click event to gallery images
 document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.gallery-grid img').forEach(img => {
-        img.addEventListener('click', function() {
-            openLightbox(this.src);
-        });
-    });
+    // Initialize gallery carousel
+    initGallery();
+    initSwipe();
+
+    // Add navigation arrow events
+    document.getElementById('prev-arrow').addEventListener('click', prevSlide);
+    document.getElementById('next-arrow').addEventListener('click', nextSlide);
 
     // Lightbox image interactions
     const lightboxImg = document.getElementById('lightbox-img');

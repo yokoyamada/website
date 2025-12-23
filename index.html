@@ -153,47 +153,39 @@
     <section id="gallery">
         <div class="container">
             <h2>Galerie</h2>
-            <div class="gallery-tabs">
-                <button class="tab-button active" onclick="showGallery('portraits')">Portraits</button>
-                <button class="tab-button" onclick="showGallery('performances')">Performances</button>
-                <button class="tab-button" onclick="showGallery('personnel')">Personnel</button>
-            </div>
-            <div id="portraits" class="gallery-content active">
-                <div class="gallery-grid">
-                    <img src="portrait-1.jpg" alt="Portrait 1">
-                    <img src="portrait-2.jpg" alt="Portrait 2">
-                    <img src="portrait-3.jpg" alt="Portrait 3">
-                    <img src="portrait-4.jpg" alt="Portrait 4">
-                    <img src="portrait-5.jpg" alt="Portrait 5">
-                    <img src="portrait-6.jpg" alt="Portrait 6">
-                    <img src="portrait-7.jpg" alt="Portrait 7">
-                    <img src="portrait-8.jpg" alt="Portrait 8">
-                    <img src="portrait-9.jpg" alt="Portrait 9">
+            <div class="gallery-container">
+                <button class="nav-arrow prev-arrow" id="prev-arrow">&#10094;</button>
+                <div class="gallery-wrapper">
+                    <div class="gallery-track" id="gallery-track">
+                        <img src="portrait-1.jpg" alt="Portrait 1">
+                        <img src="portrait-2.jpg" alt="Portrait 2">
+                        <img src="portrait-3.jpg" alt="Portrait 3">
+                        <img src="portrait-4.jpg" alt="Portrait 4">
+                        <img src="portrait-5.jpg" alt="Portrait 5">
+                        <img src="portrait-6.jpg" alt="Portrait 6">
+                        <img src="portrait-7.jpg" alt="Portrait 7">
+                        <img src="portrait-8.jpg" alt="Portrait 8">
+                        <img src="portrait-9.jpg" alt="Portrait 9">
+                        <img src="gallery-1.jpg" alt="Performance 1">
+                        <img src="gallery-2.jpg" alt="Performance 2">
+                        <img src="gallery-3.jpg" alt="Performance 3">
+                        <img src="gallery-4.jpg" alt="Performance 4">
+                        <img src="gallery-5.jpg" alt="Performance 5">
+                        <img src="gallery-6.jpg" alt="Performance 6">
+                        <img src="gallery-7.jpg" alt="Performance 7">
+                        <img src="gallery-8.jpg" alt="Performance 8">
+                        <img src="gallery-9.jpg" alt="Performance 9">
+                        <img src="gallery-10.jpg" alt="Performance 10">
+                        <img src="gallery-11.jpg" alt="Performance 11">
+                        <img src="gallery-12.jpg" alt="Performance 12">
+                        <img src="gallery-13.jpg" alt="Performance 13">
+                        <img src="gallery-14.jpg" alt="Performance 14">
+                        <img src="personal-1.jpg" alt="Personnel 1">
+                    </div>
                 </div>
+                <button class="nav-arrow next-arrow" id="next-arrow">&#10095;</button>
             </div>
-            <div id="performances" class="gallery-content">
-                <div class="gallery-grid">
-                    <img src="gallery-1.jpg" alt="Performance 1">
-                    <img src="gallery-2.jpg" alt="Performance 2">
-                    <img src="gallery-3.jpg" alt="Performance 3">
-                    <img src="gallery-4.jpg" alt="Performance 4">
-                    <img src="gallery-5.jpg" alt="Performance 5">
-                    <img src="gallery-6.jpg" alt="Performance 6">
-                    <img src="gallery-7.jpg" alt="Performance 7">
-                    <img src="gallery-8.jpg" alt="Performance 8">
-                    <img src="gallery-9.jpg" alt="Performance 9">
-                    <img src="gallery-10.jpg" alt="Performance 10">
-                    <img src="gallery-11.jpg" alt="Performance 11">
-                    <img src="gallery-12.jpg" alt="Performance 12">
-                    <img src="gallery-13.jpg" alt="Performance 13">
-                    <img src="gallery-14.jpg" alt="Performance 14">
-                </div>
-            </div>
-            <div id="personnel" class="gallery-content">
-                <div class="gallery-grid">
-                    <img src="personal-1.jpg" alt="Personnel 1">
-                </div>
-            </div>
+            <div class="gallery-indicators" id="gallery-indicators"></div>
         </div>
     </section>
 
