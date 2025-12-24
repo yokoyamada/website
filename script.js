@@ -40,7 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (!nav.contains(e.target) && navUl.classList.contains('active')) {
+        // Don't close menu if clicking on social icons
+        const isSocialIcon = e.target.closest('.social-icons');
+        if (!nav.contains(e.target) && navUl.classList.contains('active') && !isSocialIcon) {
             navUl.classList.remove('active');
             menuToggle.classList.remove('active');
 

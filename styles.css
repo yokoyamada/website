@@ -819,7 +819,7 @@ footer p {
     /* Header social icons on mobile */
     nav .social-icons {
         position: relative;
-        z-index: 1001; /* Above mobile menu */
+        z-index: 2000; /* Well above mobile menu (1000) */
         display: flex;
         gap: 1rem;
         margin-top: 0;
@@ -841,8 +841,9 @@ footer p {
         border-radius: 0;
         width: 24px;
         height: 24px;
-        z-index: 1002;
+        z-index: 2001; /* Even higher for the links */
         position: relative;
+        pointer-events: auto; /* Ensure clicks work */
     }
 
     .social-icons {
@@ -1098,6 +1099,8 @@ footer p {
         justify-content: center;
         max-width: 100%;
         box-sizing: border-box;
+        z-index: 2000;
+        position: relative;
     }
 
     nav .social-icons a {
@@ -1105,6 +1108,9 @@ footer p {
         width: 18px;
         height: 18px;
         font-size: 0.9rem;
+        z-index: 2001;
+        position: relative;
+        pointer-events: auto;
     }
 
     .social-icons a {
