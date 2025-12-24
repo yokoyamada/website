@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('nav a').forEach(link => {
+    // Close mobile menu when clicking on a link (exclude social icons)
+    document.querySelectorAll('nav a:not(.social-icons a)').forEach(link => {
         link.addEventListener('click', function() {
             if (window.innerWidth <= 768) {
                 navUl.classList.remove('active');
@@ -38,19 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        // Don't close menu if clicking on social icons
-        const isSocialIcon = e.target.closest('.social-icons');
-        if (!nav.contains(e.target) && navUl.classList.contains('active') && !isSocialIcon) {
-            navUl.classList.remove('active');
-            menuToggle.classList.remove('active');
-
-            const spans = menuToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
+    // Ensure social icons work properly
+    document.querySelectorAll('.social-icons a').forEach(icon => {
+        icon.addEventListener('click', function(e) {
+            // Allow the default link behavior
+            e.stopPropagation();
+        });
     });
 });
 
