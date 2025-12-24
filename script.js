@@ -56,10 +56,29 @@ function openLightbox(src) {
     lightbox.classList.add('active');
 
     updateLightboxNavigation();
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', handleKeydown);
 }
 
 function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
+
+    // Remove keyboard navigation
+    document.removeEventListener('keydown', handleKeydown);
+}
+
+function handleKeydown(e) {
+    if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateLightbox(-1);
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateLightbox(1);
+    } else if (e.key === 'Escape') {
+        e.preventDefault();
+        closeLightbox();
+    }
 }
 
 function navigateLightbox(direction) {
