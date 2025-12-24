@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Close mobile menu when clicking on navigation links (exclude social icons)
+    // Close mobile menu when clicking on navigation links
     document.querySelectorAll('nav ul li a').forEach(link => {
         link.addEventListener('click', function() {
             if (window.innerWidth <= 768) {
@@ -37,9 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Social icons should work normally - no special handling needed
-    // They are now positioned fixed on mobile, so they don't interfere with menu
 });
 
 // Smooth scrolling for navigation
