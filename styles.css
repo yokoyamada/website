@@ -36,9 +36,40 @@ nav {
     color: #1a1a1a;
 }
 
+/* Mobile menu toggle */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin-left: auto;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: #1a1a1a;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
 nav ul {
     display: flex;
     list-style: none;
+    transition: all 0.3s ease;
 }
 
 nav ul li {
@@ -49,6 +80,26 @@ nav ul li a {
     text-decoration: none;
     color: #1a1a1a;
     transition: color 0.3s;
+    position: relative;
+}
+
+nav ul li a:hover {
+    color: #c0392b;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: #c0392b;
+    transition: width 0.3s;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
 }
 
 nav ul li a:hover {
@@ -669,37 +720,282 @@ footer p {
 
 /* Responsive */
 @media (max-width: 768px) {
+    /* Mobile menu */
+    .menu-toggle {
+        display: flex;
+    }
+
     nav {
-        flex-direction: column;
+        flex-direction: row;
+        padding: 0.75rem 1rem;
+        position: relative;
+        align-items: center;
     }
-    
+
+    .logo {
+        font-size: 1.2rem;
+        margin-bottom: 0;
+        margin-right: auto;
+    }
+
     nav ul {
-        margin-top: 1rem;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        z-index: 1000;
     }
-    
+
+    nav ul.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
     nav ul li {
-        margin-left: 1rem;
+        margin-left: 0;
+        text-align: center;
+        border-bottom: 1px solid #f0f0f0;
     }
-    
+
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    nav ul li a {
+        display: block;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        color: #1a1a1a;
+    }
+
+    nav ul li a:hover {
+        background: rgba(192, 57, 43, 0.05);
+        color: #c0392b;
+    }
+
     .social-icons {
-        margin-top: 1rem;
+        margin-top: 0;
+        padding: 1rem 2rem;
+        justify-content: center;
     }
-    
+
+    .social-icons a {
+        margin: 0 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Hero section mobile */
+    #hero {
+        padding: 100px 1rem 3rem;
+        min-height: auto;
+    }
+
     .hero-content {
         grid-template-columns: 1fr;
         grid-template-areas: "text" "image" "about";
         text-align: center;
+        gap: 2rem;
     }
-    
+
     .hero-text h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
+        line-height: 1.2;
     }
-    
+
+    .hero-text p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-image {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+
     .hero-about {
         text-align: center;
     }
-    
+
+    .hero-about h2 {
+        font-size: 1.6rem;
+    }
+
+    /* Video grid mobile */
     .video-grid {
         grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .video-item iframe {
+        height: 220px;
+    }
+
+    /* Album grid mobile */
+    .album-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .album-card {
+        margin: 0 auto;
+        max-width: 320px;
+    }
+
+    .album-card img {
+        height: 280px;
+    }
+
+    /* General mobile improvements */
+    section {
+        padding: 4rem 1rem;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 1.3rem;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    /* Gallery mobile */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .gallery-grid img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+}
+
+/* Extra small screens (phones < 480px) */
+@media (max-width: 480px) {
+    nav {
+        padding: 0.5rem;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .menu-toggle {
+        padding: 0.4rem;
+    }
+
+    .menu-toggle span {
+        width: 22px;
+        height: 2px;
+        margin: 2px 0;
+    }
+
+    nav ul {
+        padding: 0.5rem 0;
+    }
+
+    nav ul li a {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .social-icons {
+        padding: 0.75rem 1rem;
+    }
+
+    .social-icons a {
+        margin: 0 0.5rem;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    #hero {
+        padding: 90px 1rem 2rem;
+    }
+
+    .hero-text h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+    }
+
+    .hero-image {
+        width: 160px;
+        height: 160px;
+    }
+
+    .hero-about h2 {
+        font-size: 1.4rem;
+    }
+
+    .video-item iframe {
+        height: 200px;
+    }
+
+    .album-card {
+        max-width: 280px;
+    }
+
+    .album-card img {
+        height: 250px;
+    }
+
+    .album-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .album-card p {
+        font-size: 0.9rem;
+    }
+
+    .album-card a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    section {
+        padding: 3rem 1rem;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Gallery extra small */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .gallery-grid img {
+        height: 180px;
     }
 }
