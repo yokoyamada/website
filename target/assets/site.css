@@ -29,6 +29,7 @@ body {
 }
 
 img { max-width: 100%; height: auto; display: block; }
+[hidden] { display: none !important; }
 
 a { color: var(--accent); text-underline-offset: 3px; }
 a:hover { color: var(--ink); }
@@ -100,7 +101,9 @@ sup { line-height: 0; }
 .todo { border: 1px dashed var(--sky-deep); background: rgba(255, 255, 255, 0.6); color: var(--muted); padding: 12px 16px; border-radius: 6px; font-style: italic; }
 
 /* ---------- Temps forts ---------- */
-.highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media (max-width: 1040px) { .highlights { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .highlights { grid-template-columns: 1fr; gap: 12px; } .highlight { padding: 16px 18px; } }
 .highlight { background: var(--card); border-top: 3px solid var(--sky-deep); border-radius: 4px; padding: 20px 22px; }
 .highlight h3 { margin: 0 0 0.4rem; font-size: 1.35rem; }
 .highlight p { margin: 0; color: var(--muted); }
@@ -121,12 +124,27 @@ sup { line-height: 0; }
 .cv-block p:last-child { margin-bottom: 0; }
 .tags { list-style: none; padding: 0 !important; display: flex; flex-wrap: wrap; gap: 8px; }
 .tags li { margin: 0; background: var(--tint); border-radius: 999px; padding: 4px 14px; font-size: 0.98rem; }
-@media (max-width: 860px) { .cv-grid { columns: 1; } }
+
+/* Rubriques : dépliées sur ordinateur, en accordéon sur petit écran */
+.cv-block > summary { list-style: none; }
+.cv-block > summary::-webkit-details-marker { display: none; }
+.cv-block > summary h3 { margin: 0; }
+.cv-block[open] > summary { margin-bottom: 0.8rem; }
+@media (max-width: 860px) {
+    .cv-grid { columns: 1; }
+    .cv-block { padding: 18px 20px; margin-bottom: 12px; }
+    .cv-wide { margin-bottom: 12px; }
+    .cv-block > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; }
+    .cv-block > summary::after { content: "+"; flex: none; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--tint); color: var(--accent); font-size: 1.3rem; line-height: 1; }
+    .cv-block[open] > summary::after { content: "–"; }
+}
 
 /* ---------- Concerts ---------- */
 .concert { display: grid; grid-template-columns: 150px 1fr; gap: 20px; background: var(--card); border-radius: 6px; padding: 22px 24px; margin: 0 0 18px; }
 .concert-date { margin: 0; font-family: var(--serif); font-size: 1.25rem; color: var(--accent); font-weight: 600; }
 .concert-place { margin: 0.3rem 0 0.8rem; color: var(--muted); }
+.concert-date-open { font-family: var(--sans); font-size: 0.9rem; font-weight: 400; font-style: italic; color: var(--muted); }
+.concert-note { margin: 0; }
 .programme { margin: 0; padding-left: 1.1em; }
 .programme li { margin: 0.25rem 0; }
 .programme li::marker { color: var(--sky-deep); }
@@ -154,9 +172,10 @@ sup { line-height: 0; }
 .yt::after { content: ""; position: absolute; inset: 0; margin: auto; width: 62px; height: 62px; border-radius: 50%; background: rgba(255, 255, 255, 0.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231f6f9f' d='M9 6.5v11l9-5.5z'/%3E%3C/svg%3E") center / 34px no-repeat; }
 .video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 6px; }
 .more { margin: 2rem 0 0; text-align: center; font-weight: 600; }
+.show-more { background: var(--card); cursor: pointer; font-family: inherit; }
 
 /* ---------- Galerie ---------- */
-.gallery { columns: 4 220px; column-gap: 14px; }
+.gallery { columns: 4 150px; column-gap: 14px; }
 .gallery a { display: block; margin: 0 0 14px; break-inside: avoid; border-radius: 4px; overflow: hidden; }
 .gallery img { width: 100%; transition: transform 0.3s; }
 .gallery a:hover img, .gallery a:focus-visible img { transform: scale(1.03); }

@@ -61,4 +61,39 @@ lightbox.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowRight') show(current + 1);
 });
 
+// Parcours : rubriques en accordéon sur petit écran, toujours dépliées sur ordinateur
+const small = window.matchMedia('(max-width: 860px)');
+const rubriques = [...document.querySelectorAll('details.cv-block')];
+function syncRubriques() {
+    rubriques.forEach((d) => {
+        d.open = !small.matches;
+        d.querySelector('summary').tabIndex = small.matches ? 0 : -1;
+    });
+}
+rubriques.forEach((d) => {
+    d.querySelector('summary').addEventListener('click', (e) => {
+        if (!small.matches) e.preventDefault();
+    });
+});
+small.addEventListener('change', syncRubriques);
+syncRubriques();
+
+// Vidéos et galerie : on n'affiche que les premiers éléments, le reste à la demande
+document.querySelectorAll('[data-collapse]').forEach((box) => {
+    const rest = [...box.children].slice(Number(box.dataset.collapse));
+    if (!rest.length) return;
+    rest.forEach((el) => { el.hidden = true; });
+    const more = document.createElement('p');
+    more.className = 'more';
+    const btn = document.createElement('button');
+    btn.className = 'btn show-more';
+    btn.textContent = `Afficher les ${rest.length} autres ${box.dataset.collapseLabel}`;
+    btn.addEventListener('click', () => {
+        rest.forEach((el) => { el.hidden = false; });
+        more.remove();
+    });
+    more.append(btn);
+    box.after(more);
+});
+
 document.getElementById('annee').textContent = new Date().getFullYear();
