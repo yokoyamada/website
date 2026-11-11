@@ -105,6 +105,8 @@ sup { line-height: 0; }
 .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 @media (max-width: 1040px) { .highlights { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 561px) and (max-width: 1040px) { .highlight:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+/* Sur 3 colonnes, s'il reste une carte seule, la première prend toute la largeur */
+@media (min-width: 1041px) { .highlight:first-child:nth-last-child(3n+1) { grid-column: 1 / -1; } }
 @media (max-width: 560px) { .highlights { grid-template-columns: 1fr; gap: 12px; } .highlight { padding: 16px 18px; } }
 .highlight { background: var(--card); border-top: 3px solid var(--sky-deep); border-radius: 4px; padding: 20px 22px; }
 .highlight h3 { margin: 0 0 0.4rem; font-size: 1.35rem; }
