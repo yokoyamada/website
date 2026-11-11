@@ -78,6 +78,17 @@ rubriques.forEach((d) => {
 small.addEventListener('change', syncRubriques);
 syncRubriques();
 
+// Un lien interne vers une rubrique repliée la déplie avant d'y défiler
+function openTarget() {
+    const cible = document.getElementById(location.hash.slice(1));
+    if (cible && cible.matches('details')) {
+        cible.open = true;
+        cible.scrollIntoView();
+    }
+}
+window.addEventListener('hashchange', openTarget);
+openTarget();
+
 // Vidéos et galerie : on n'affiche que les premiers éléments, le reste à la demande
 document.querySelectorAll('[data-collapse]').forEach((box) => {
     const rest = [...box.children].slice(Number(box.dataset.collapse));
