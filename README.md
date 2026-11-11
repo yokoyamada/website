@@ -1,52 +1,34 @@
-# Yoko Yamada - Pianiste
+# Yoko Yamada — site officiel
 
-Site web officiel de Yoko Yamada, pianiste contemporaine spécialisée dans la musique du XXe et XXIe siècle.
+Site statique (HTML/CSS/JS, sans étape de build) hébergé sur GitHub Pages : <https://yokoyamada.com>
 
-## 🌐 Accès
+## Organisation
 
-- **Site web** : [yokoyamada.com](https://yokoyamada.com)
-- **GitHub Pages** : [yokoyamada.github.io/website](https://yokoyamada.github.io/website)
+| Chemin | Rôle |
+| --- | --- |
+| `index.html`, `styles.css`, `script.js`, images à la racine | version actuellement en ligne |
+| `target/` | nouvelle version en cours de validation → <https://yokoyamada.com/target/> |
+| `target/index.html` | tout le contenu (biographie, parcours, concerts, CD…) |
+| `target/assets/` | `site.css` (couleurs dans `:root`), `site.js` |
+| `target/img/` | photos et pochettes (WebP) |
+| `robots.txt`, `sitemap.xml` | indexation par les moteurs de recherche |
+| `_outils/` | scripts locaux (non publiés par GitHub Pages) |
 
-## 📁 Structure
+## Travailler en local
 
-- `index.html` - Page principale
-- `styles.css` - Styles CSS responsives
-- `script.js` - Fonctionnalités JavaScript
-- `.htaccess` - Configuration serveur
-- `CNAME` - Configuration domaine GitHub Pages
-- `*.jpg`, `*.png`, `*.webp` - Images et assets
+```bash
+_outils/serveur-local.sh          # puis ouvrir http://localhost:8000/target/
+```
 
-## 🎵 Contenu
+Modifier `target/index.html`, recharger la page, puis `git add`, `git commit`, `git push`.
+Les blocs en pointillés « À compléter » (`class="todo"`) signalent le contenu manquant.
 
-- **Biographie** - Parcours artistique
-- **Répertoire** - Œuvres interprétées
-- **Vidéos** - Enregistrements de concerts
-- **Discographie** - Albums publiés
-- **Galerie** - Photos de concerts
-- **Contact** - Informations de contact
+## Mise en ligne de la nouvelle version
 
-## 🛠️ Technologies
+Tant qu'elle est dans `target/`, la page porte une balise `noindex` : les moteurs de recherche l'ignorent.
+Une fois validée :
 
-- HTML5 sémantique
-- CSS3 avec Flexbox/Grid
-- JavaScript vanilla
-- Design responsive mobile-first
-- Hébergement GitHub Pages
-
-## 📱 Responsive
-
-Site entièrement optimisé pour :
-- Ordinateurs de bureau
-- Tablettes
-- Téléphones mobiles
-- Tous formats d'écran
-
-## 📧 Contact
-
-Pour toute question ou collaboration :
-- Email : [Informations dans la section contact]
-- Réseaux sociaux : Facebook, Instagram
-
----
-*Site créé avec ❤️ pour la musique contemporaine*</content>
-<parameter name="filePath">c:\Users\HULULWABURHAN\yoko\README.md
+```bash
+_outils/promote.sh                # remplace la racine par target/ et retire le noindex
+git add -A && git commit -m "Mise en ligne de la nouvelle version" && git push
+```
