@@ -156,8 +156,8 @@ sup { line-height: 0; }
 .programme li::marker { color: var(--sky-deep); }
 @media (max-width: 620px) { .concert { grid-template-columns: 1fr; gap: 6px; } }
 .concert h3 { margin: 0; font-size: 1.3rem; }
-.concerts-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 1.2rem 0 0; }
-.concerts-link { margin: 1.5rem 0 0; }
+.concerts-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0.8rem 0 0; }
+.cv-block[open] > summary + .cv-sub { margin-top: 0; }
 
 /* Fiches de concert à l'intérieur d'une rubrique du parcours */
 .cv-block .concert { grid-template-columns: 1fr; gap: 0; background: none; border-radius: 0; padding: 0; margin: 0 0 1.2rem; }
