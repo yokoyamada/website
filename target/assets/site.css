@@ -156,6 +156,7 @@ sup { line-height: 0; }
 .programme li::marker { color: var(--sky-deep); }
 @media (max-width: 620px) { .concert { grid-template-columns: 1fr; gap: 6px; } }
 .concert h3 { margin: 0; font-size: 1.3rem; }
+.concerts-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 1.2rem 0 0; }
 .concerts-link { margin: 1.5rem 0 0; }
 
 /* Fiches de concert à l'intérieur d'une rubrique du parcours */
