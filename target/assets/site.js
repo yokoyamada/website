@@ -12,6 +12,26 @@ menu.addEventListener('click', (e) => {
     }
 });
 
+// En-tête : ombre au défilement et rubrique courante surlignée dans le menu
+const header = document.querySelector('.site-header');
+const navLinks = [...menu.querySelectorAll('a[href^="#"]')];
+const navTargets = navLinks.map((a) => document.getElementById(a.hash.slice(1)));
+function syncHeader() {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    const line = window.scrollY + header.offsetHeight + window.innerHeight * 0.25;
+    // la rubrique la plus basse déjà atteinte l'emporte
+    let best = -1, bestTop = -Infinity;
+    navTargets.forEach((el, i) => {
+        if (!el) return;
+        const top = el.getBoundingClientRect().top + window.scrollY;
+        if (top <= line && top > bestTop) { best = i; bestTop = top; }
+    });
+    navLinks.forEach((a, i) => a.classList.toggle('active', i === best));
+}
+window.addEventListener('scroll', syncHeader, { passive: true });
+window.addEventListener('resize', syncHeader);
+syncHeader();
+
 // Vidéos YouTube : seule la miniature est chargée, le lecteur n'arrive qu'au clic
 document.querySelectorAll('.yt').forEach((btn) => {
     const id = btn.dataset.id;
